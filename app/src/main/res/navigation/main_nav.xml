@@ -3,35 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homePage">
+    app:startDestination="@id/mainFragment">
 
-    <fragment
-        android:id="@+id/homePage"
-        android:name="com.example.imdbclone.fragments.home.HomePage"
-        android:label="fragment_home_page"
-        tools:layout="@layout/fragment_home_page" >
-        <action
-            android:id="@+id/action_homePage_to_searchPage"
-            app:destination="@id/searchPage" />
-        <action
-            android:id="@+id/action_homePage_to_movieDetails"
-            app:destination="@id/movieDetails" />
-    </fragment>
-    <fragment
-        android:id="@+id/searchPage"
-        android:name="com.example.imdbclone.fragments.search.SearchPage"
-        android:label="fragment_search_page"
-        tools:layout="@layout/fragment_search_page" >
-        <action
-            android:id="@+id/action_searchPage_to_homePage"
-            app:destination="@id/homePage" />
-        <action
-            android:id="@+id/action_searchPage_to_movieDetails"
-            app:destination="@id/movieDetails" />
-    </fragment>
     <fragment
         android:id="@+id/movieDetails"
         android:name="com.example.imdbclone.fragments.movieDetails.MovieDetails"
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.imdbclone.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_movieDetails"
+            app:destination="@id/movieDetails" />
+    </fragment>
 </navigation>
