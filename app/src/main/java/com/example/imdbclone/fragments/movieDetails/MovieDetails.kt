@@ -24,6 +24,12 @@ class MovieDetails : Fragment() {
         _binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
 
         binding.args = args
+        return binding.root
+    }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

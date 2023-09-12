@@ -2,6 +2,7 @@ package com.example.imdbclone.fragments.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imdbclone.databinding.MovieCardBinding
 import com.example.imdbclone.models.MovieData
@@ -33,5 +34,12 @@ class MoviePreviewAdapter: RecyclerView.Adapter<MoviePreviewAdapter.MoviePreview
     override fun onBindViewHolder(holder: MoviePreviewViewHolder, position: Int) {
         val currentItem = movieList[position]
         holder.bind(currentItem)
+    }
+
+    fun setData(moviesData: List<MovieData>){
+//        val toDoDiffUtil = ToDoDiffUtil(dataList, toDoData)
+//        val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
+        this.movieList = moviesData
+        //toDoDiffResult.dispatchUpdatesTo(this)
     }
 }

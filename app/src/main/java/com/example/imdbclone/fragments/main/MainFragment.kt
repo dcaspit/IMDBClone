@@ -25,8 +25,7 @@ class MainFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
-        val adapter = TabsAdapter(parentFragmentManager, lifecycle)
-        binding.viewPager.adapter = adapter
+        binding.viewPager.adapter = TabsAdapter(parentFragmentManager, lifecycle)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.text = tabList[position]
         }.attach()
