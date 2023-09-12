@@ -4,11 +4,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.imdbclone.fragments.home.HomePageDirections
-import com.example.imdbclone.fragments.home.HomePageDirections.Companion.actionHomePageToMovieDetails
-import com.example.imdbclone.fragments.home.adapter.MoviePreviewAdapter
-import com.example.imdbclone.fragments.main.MainFragmentDirections
+import com.example.imdbclone.fragments.home.HomeFragmentDirections
+import com.example.imdbclone.fragments.home.adapter.HomeFragmentHorizontalRecyclerAdapter
 import com.example.imdbclone.models.MovieData
+import com.example.imdbclone.network.MovieApiResponse
 
 class BindingAdapters {
     companion object {
@@ -20,8 +19,8 @@ class BindingAdapters {
             movieData: MovieData
         ) {
             constraintLayout.setOnClickListener {
-                val action = HomePageDirections.actionHomePageToMovieDetails(movieData)
-                constraintLayout.findNavController().navigate(action)
+//                val action = HomeFragmentDirections.actionHomePageToMovieDetails(movieData)
+//                constraintLayout.findNavController().navigate(action)
             }
         }
 
@@ -30,16 +29,16 @@ class BindingAdapters {
         @BindingAdapter("populateMoviesPreviewRecycler")
         fun populateMoviesPreviewRecycler(
             recyclerView: RecyclerView,
-            moviesData: List<MovieData>?
+            MovieApiResponse: MovieApiResponse?
         ) {
             try {
-                if(moviesData == null) return
-                if (recyclerView.adapter != null && recyclerView.adapter is MoviePreviewAdapter) {
-                    val adapter = recyclerView.adapter as MoviePreviewAdapter
-                    adapter.setData(moviesData)
+                if(MovieApiResponse == null) return
+                if (recyclerView.adapter != null && recyclerView.adapter is HomeFragmentHorizontalRecyclerAdapter) {
+                    val adapter = recyclerView.adapter as HomeFragmentHorizontalRecyclerAdapter
+                    adapter.setData(MovieApiResponse.results)
                     adapter.notifyItemInserted(0)
                 } else {
-                    recyclerView.adapter = MoviePreviewAdapter().apply { setData(listOf()) }
+                    recyclerView.adapter = HomeFragmentHorizontalRecyclerAdapter().apply { setData(listOf()) }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

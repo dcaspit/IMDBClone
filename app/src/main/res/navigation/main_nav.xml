@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/movieDetails"
-        android:name="com.example.imdbclone.fragments.movieDetails.MovieDetails"
+        android:name="com.example.imdbclone.fragments.details.MovieDetails"
         android:label="Movie Details"
         tools:layout="@layout/fragment_movie_details" >
         <argument
-            android:name="movieData"
-            app:argType="com.example.imdbclone.models.MovieData" />
+            android:name="movie"
+            app:argType="com.example.imdbclone.network.Movie" />
         <action
             android:id="@+id/action_movieDetails_to_homePage"
             app:destination="@id/homePage" />
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/homePage"
-        android:name="com.example.imdbclone.fragments.home.HomePage"
+        android:name="com.example.imdbclone.fragments.home.HomeFragment"
         android:label="HomePage" >
         <action
             android:id="@+id/action_homePage_to_movieDetails"
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchPage"
-        android:name="com.example.imdbclone.fragments.search.SearchPage"
+        android:name="com.example.imdbclone.fragments.search.SearchFragment"
         android:label="fragment_search_page"
         tools:layout="@layout/fragment_search_page" >
         <action

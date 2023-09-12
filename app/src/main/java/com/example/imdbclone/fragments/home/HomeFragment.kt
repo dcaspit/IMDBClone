@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imdbclone.databinding.FragmentHomePageBinding
-import com.example.imdbclone.fragments.home.adapter.MoviePreviewAdapter
-import com.example.imdbclone.models.listOfMovies
+import com.example.imdbclone.fragments.home.adapter.HomeFragmentHorizontalRecyclerAdapter
 import com.example.imdbclone.viewModels.MoviesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomePage(
+class HomeFragment(
 ) : Fragment() {
 
     private val moviesViewModel: MoviesViewModel by viewModels()
@@ -24,7 +22,7 @@ class HomePage(
     private val binding get() = _binding!!
     private var _binding: FragmentHomePageBinding? = null
 
-    private val moviePreviewAdapter: MoviePreviewAdapter by lazy { MoviePreviewAdapter() }
+    private val moviePreviewAdapter: HomeFragmentHorizontalRecyclerAdapter by lazy { HomeFragmentHorizontalRecyclerAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

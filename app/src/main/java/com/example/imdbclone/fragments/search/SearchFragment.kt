@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.imdbclone.R
 
-class SearchPage : Fragment() {
+class SearchFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

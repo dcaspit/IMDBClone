@@ -1,4 +1,4 @@
-package com.example.imdbclone.fragments.movieDetails
+package com.example.imdbclone.fragments.details
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import com.example.imdbclone.R
 import com.example.imdbclone.databinding.FragmentMovieDetailsBinding
 
 class MovieDetails : Fragment() {

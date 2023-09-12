@@ -6,14 +6,14 @@
     <data>
         <variable
             name="args"
-            type="com.example.imdbclone.fragments.movieDetails.MovieDetailsArgs" />
+            type="com.example.imdbclone.fragments.details.MovieDetailsArgs" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="24dp"
-        tools:context=".fragments.movieDetails.MovieDetails">
+        tools:context=".fragments.details.MovieDetails">
 
         <TextView
             android:id="@+id/current_title_et"
@@ -25,7 +25,7 @@
             android:paddingEnd="24dp"
             android:gravity="center"
             android:textSize="26dp"
-            android:text="@{args.movieData.title}"
+            android:text="@{args.movie.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

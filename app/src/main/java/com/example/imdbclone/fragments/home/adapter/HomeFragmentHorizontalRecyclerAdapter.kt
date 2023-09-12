@@ -3,26 +3,25 @@ package com.example.imdbclone.fragments.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imdbclone.databinding.MovieCardBinding
-import com.example.imdbclone.fragments.home.HomePageDirections
 import com.example.imdbclone.fragments.main.MainFragmentDirections
 import com.example.imdbclone.models.MovieData
-import com.example.imdbclone.models.listOfMovies
+import com.example.imdbclone.network.Movie
+import com.example.imdbclone.network.MovieApiResponse
 
-class MoviePreviewAdapter: RecyclerView.Adapter<MoviePreviewAdapter.MoviePreviewViewHolder>() {
+class HomeFragmentHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeFragmentHorizontalRecyclerAdapter.MoviePreviewViewHolder>() {
 
-    var movieList = emptyList<MovieData>()
+    var movieList = emptyList<Movie>()
 
     class MoviePreviewViewHolder(
         private val binding: MovieCardBinding
     ):  RecyclerView.ViewHolder(binding.root){
 
-        fun bind(movieData: MovieData){
-            binding.movieData = movieData
+        fun bind(movie: Movie){
+            binding.movie = movie
             binding.rowBackground.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movieData)
+                val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
                 it.findNavController().navigate(action)
             }
             binding.executePendingBindings()
@@ -44,7 +43,7 @@ class MoviePreviewAdapter: RecyclerView.Adapter<MoviePreviewAdapter.MoviePreview
         holder.bind(currentItem)
     }
 
-    fun setData(moviesData: List<MovieData>?){
+    fun setData(moviesData: List<Movie>?){
 //        val toDoDiffUtil = ToDoDiffUtil(dataList, toDoData)
 //        val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
         if(moviesData == null){
