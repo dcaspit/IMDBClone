@@ -1,4 +1,4 @@
-package com.example.imdbclone
+package com.example.imdbclone.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

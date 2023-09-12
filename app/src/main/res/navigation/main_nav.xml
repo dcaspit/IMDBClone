@@ -8,15 +8,24 @@
     <fragment
         android:id="@+id/movieDetails"
         android:name="com.example.imdbclone.fragments.movieDetails.MovieDetails"
-        android:label="fragment_movie_details"
-        tools:layout="@layout/fragment_movie_details" />
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details" >
+        <argument
+            android:name="movieData"
+            app:argType="com.example.imdbclone.models.MovieData" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.imdbclone.MainFragment"
-        android:label="fragment_main"
+        android:name="com.example.imdbclone.fragments.main.MainFragment"
+        android:label="IMDB Clone APP"
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_movieDetails"
-            app:destination="@id/movieDetails" />
+            app:destination="@id/movieDetails"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 </navigation>
