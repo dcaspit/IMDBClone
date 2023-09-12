@@ -22,14 +22,21 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
-        binding.viewPager.adapter = TabsAdapter(parentFragmentManager, lifecycle)
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
-            tab.text = tabList[position]
-        }.attach()
-        return binding.root
+        try {
+
+            _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+
+            binding.viewPager.adapter = TabsAdapter(childFragmentManager, lifecycle)
+            TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
+                tab.text = tabList[position]
+            }.attach()
+            return binding.root
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null;
     }
 
     override fun onDestroyView() {

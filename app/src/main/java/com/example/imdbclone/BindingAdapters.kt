@@ -4,6 +4,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.imdbclone.fragments.home.HomePageDirections
+import com.example.imdbclone.fragments.home.HomePageDirections.Companion.actionHomePageToMovieDetails
 import com.example.imdbclone.fragments.home.adapter.MoviePreviewAdapter
 import com.example.imdbclone.fragments.main.MainFragmentDirections
 import com.example.imdbclone.models.MovieData
@@ -16,9 +18,9 @@ class BindingAdapters {
         fun sendMovieData(
             constraintLayout: ConstraintLayout,
             movieData: MovieData
-        ){
+        ) {
             constraintLayout.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movieData)
+                val action = HomePageDirections.actionHomePageToMovieDetails(movieData)
                 constraintLayout.findNavController().navigate(action)
             }
         }
@@ -29,16 +31,18 @@ class BindingAdapters {
         fun populateMoviesPreviewRecycler(
             recyclerView: RecyclerView,
             moviesData: List<MovieData>?
-        ){
-            if(recyclerView.adapter != null && recyclerView.adapter is MoviePreviewAdapter){
-                val adapter = recyclerView.adapter as MoviePreviewAdapter
-                if (moviesData != null) {
+        ) {
+            try {
+                if(moviesData == null) return
+                if (recyclerView.adapter != null && recyclerView.adapter is MoviePreviewAdapter) {
+                    val adapter = recyclerView.adapter as MoviePreviewAdapter
                     adapter.setData(moviesData)
-                    adapter.notifyDataSetChanged()
+                    adapter.notifyItemInserted(0)
+                } else {
+                    recyclerView.adapter = MoviePreviewAdapter().apply { setData(listOf()) }
                 }
-            }
-            else{
-                recyclerView.adapter = MoviePreviewAdapter().apply { setData(listOf()) }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
 

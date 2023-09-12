@@ -6,13 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imdbclone.databinding.FragmentHomePageBinding
 import com.example.imdbclone.fragments.home.adapter.MoviePreviewAdapter
 import com.example.imdbclone.models.listOfMovies
 import com.example.imdbclone.viewModels.MoviesViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class HomePage : Fragment() {
+class HomePage(
+) : Fragment() {
 
     private val moviesViewModel: MoviesViewModel by viewModels()
 
@@ -24,24 +29,36 @@ class HomePage : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentHomePageBinding.inflate(layoutInflater, container, false)
-        binding.lifecycleOwner = this
-        binding.moviesViewModel = moviesViewModel
+    ): View? {
+        try{
+            _binding = FragmentHomePageBinding.inflate(layoutInflater, container, false)
+            binding.lifecycleOwner = viewLifecycleOwner
+            binding.moviesViewModel = moviesViewModel
 
-        setupRecyclerview()
+            setupRecyclerview()
 
-        return binding.root
+            return binding.root
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return null;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //moviesViewModel.fetchMoviesPreviews()
+        lifecycleScope.launch(Dispatchers.IO) {
+            moviesViewModel.fetchMoviesPreviews()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        moviesViewModel.resetObservables()
     }
 
     private fun setupRecyclerview() {
         val recyclerView = binding.recyclerView
-        recyclerView.adapter = moviePreviewAdapter.apply { setData(listOfMovies) }
+        recyclerView.adapter = moviePreviewAdapter
         val layoutManager = LinearLayoutManager(
             binding.root.context,
             LinearLayoutManager.HORIZONTAL, false

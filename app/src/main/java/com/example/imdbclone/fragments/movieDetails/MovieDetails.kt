@@ -21,10 +21,16 @@ class MovieDetails : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
+        try {
 
-        binding.args = args
-        return binding.root
+            _binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
+
+            binding.args = args
+            return binding.root
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null;
     }
 
 

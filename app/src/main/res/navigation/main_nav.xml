@@ -13,6 +13,15 @@
         <argument
             android:name="movieData"
             app:argType="com.example.imdbclone.models.MovieData" />
+        <action
+            android:id="@+id/action_movieDetails_to_homePage"
+            app:destination="@id/homePage" />
+        <action
+            android:id="@+id/action_movieDetails_to_searchPage"
+            app:destination="@id/searchPage" />
+        <action
+            android:id="@+id/action_movieDetails_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -20,12 +29,30 @@
         android:label="IMDB Clone APP"
         tools:layout="@layout/fragment_main" >
         <action
+            android:id="@+id/action_mainFragment_to_homePage"
+            app:destination="@id/homePage" />
+        <action
+            android:id="@+id/action_mainFragment_to_searchPage"
+            app:destination="@id/searchPage" />
+        <action
             android:id="@+id/action_mainFragment_to_movieDetails"
-            app:destination="@id/movieDetails"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true"
-            />
+            app:destination="@id/movieDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/homePage"
+        android:name="com.example.imdbclone.fragments.home.HomePage"
+        android:label="HomePage" >
+        <action
+            android:id="@+id/action_homePage_to_movieDetails"
+            app:destination="@id/movieDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchPage"
+        android:name="com.example.imdbclone.fragments.search.SearchPage"
+        android:label="fragment_search_page"
+        tools:layout="@layout/fragment_search_page" >
+        <action
+            android:id="@+id/action_searchPage_to_movieDetails"
+            app:destination="@id/movieDetails" />
     </fragment>
 </navigation>
