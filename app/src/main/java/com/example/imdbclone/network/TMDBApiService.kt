@@ -5,13 +5,11 @@ import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.parcelize.Parcelize
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Url
 
 
 private val moshi = Moshi.Builder()
@@ -22,6 +20,7 @@ interface TMDBApiService {
     @Headers("Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYzliMzJhNmM3ZTZjNmRmNmI3OTIzZmFhMzQ0NmU0ZSIsInN1YiI6IjY0ZmY0ZWRkNmEyMjI3MDEzNzJjY2VmMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OugtrcAP8bqu6_nBVLUy6zgWywnw8x1T-YXEPeSfy7I")
     @GET("movie/popular?language=en-US&page=1")
     suspend fun getMovies(): MovieApiResponse
+
 }
 private const val IMAGE_BASE_URL = "https://www.themoviedb.org/t/p/w220_and_h330_face"
 private const val BASE_URL = "https://api.themoviedb.org/3/"

@@ -33,27 +33,10 @@ class MoviesViewModel(application: Application): AndroidViewModel(application) {
             try {
                 withContext(Dispatchers.Default){
                     delay(200)
-                    val call = TMDBApi.tmdbApiService.getMovies()
-                    _moviesPreview.postValue(call)
-//                    call.enqueue(object : Callback<MovieApiResponse> {
-//                        override fun onResponse(
-//                            call: Call<MovieApiResponse>,
-//                            response: Response<MovieApiResponse>
-//                        ) {
-//                            if(response.isSuccessful){
-//                                val movieApiResponse = response.body()
-//                                if(movieApiResponse != null){
-//                                    _moviesPreview.postValue(movieApiResponse!!)
-//                                }
-//                            }
-//                        }
-//
-//                        override fun onFailure(call: Call<MovieApiResponse>, t: Throwable) {
-//                            t.message?.let { Log.d("BAD", it) };
-//                        }
-//
-//                    })
-
+                    if(_moviesPreview.value == null){
+                        val call = TMDBApi.tmdbApiService.getMovies()
+                        _moviesPreview.postValue(call)
+                    }
                 }
             }catch (e: Exception){
                 Log.d("ERROR", e.stackTraceToString())

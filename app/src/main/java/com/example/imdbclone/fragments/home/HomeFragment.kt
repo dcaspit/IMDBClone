@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imdbclone.databinding.FragmentHomePageBinding
-import com.example.imdbclone.fragments.home.adapter.HomeFragmentHorizontalRecyclerAdapter
+import com.example.imdbclone.fragments.home.adapter.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.viewModels.MoviesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class HomeFragment(
     private val binding get() = _binding!!
     private var _binding: FragmentHomePageBinding? = null
 
-    private val moviePreviewAdapter: HomeFragmentHorizontalRecyclerAdapter by lazy { HomeFragmentHorizontalRecyclerAdapter() }
+    private val moviePreviewAdapter: HomeHorizontalRecyclerAdapter by lazy { HomeHorizontalRecyclerAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +47,6 @@ class HomeFragment(
         lifecycleScope.launch(Dispatchers.IO) {
             moviesViewModel.fetchMoviesPreviews()
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        moviesViewModel.resetObservables()
     }
 
     private fun setupRecyclerview() {

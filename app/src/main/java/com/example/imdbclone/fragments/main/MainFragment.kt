@@ -29,6 +29,7 @@ class MainFragment : Fragment() {
             _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
 
             binding.viewPager.adapter = TabsAdapter(childFragmentManager, lifecycle)
+            binding.viewPager.isUserInputEnabled = false
             TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
                 tab.text = tabList[position]
             }.attach()

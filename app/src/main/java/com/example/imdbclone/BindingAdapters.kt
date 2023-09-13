@@ -2,10 +2,8 @@ package com.example.imdbclone
 
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.imdbclone.fragments.home.HomeFragmentDirections
-import com.example.imdbclone.fragments.home.adapter.HomeFragmentHorizontalRecyclerAdapter
+import com.example.imdbclone.fragments.home.adapter.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.models.MovieData
 import com.example.imdbclone.network.MovieApiResponse
 
@@ -29,17 +27,16 @@ class BindingAdapters {
         @BindingAdapter("populateMoviesPreviewRecycler")
         fun populateMoviesPreviewRecycler(
             recyclerView: RecyclerView,
-            MovieApiResponse: MovieApiResponse?
+            movieApiResponse: MovieApiResponse?
         ) {
             try {
-                if(MovieApiResponse == null) return
-                if (recyclerView.adapter != null && recyclerView.adapter is HomeFragmentHorizontalRecyclerAdapter) {
-                    val adapter = recyclerView.adapter as HomeFragmentHorizontalRecyclerAdapter
-                    adapter.setData(MovieApiResponse.results)
-                    adapter.notifyItemInserted(0)
-                } else {
-                    recyclerView.adapter = HomeFragmentHorizontalRecyclerAdapter().apply { setData(listOf()) }
+                if (movieApiResponse == null) return
+                if (recyclerView.adapter == null || recyclerView.adapter !is HomeHorizontalRecyclerAdapter) {
+                    recyclerView.adapter = HomeHorizontalRecyclerAdapter().apply { setData(listOf()) }
                 }
+
+                val adapter = recyclerView.adapter as HomeHorizontalRecyclerAdapter
+                adapter.setData(movieApiResponse.results)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

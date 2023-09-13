@@ -2,15 +2,17 @@ package com.example.imdbclone.fragments.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.loadAny
 import com.example.imdbclone.databinding.MovieCardBinding
 import com.example.imdbclone.fragments.main.MainFragmentDirections
-import com.example.imdbclone.models.MovieData
 import com.example.imdbclone.network.Movie
-import com.example.imdbclone.network.MovieApiResponse
 
-class HomeFragmentHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeFragmentHorizontalRecyclerAdapter.MoviePreviewViewHolder>() {
+class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecyclerAdapter.MoviePreviewViewHolder>() {
 
     var movieList = emptyList<Movie>()
 
@@ -24,6 +26,8 @@ class HomeFragmentHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeFragmentHo
                 val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
                 it.findNavController().navigate(action)
             }
+            val imgUri = ("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path).toUri().buildUpon().scheme("https").build()
+            binding.movieImage.load(imgUri)
             binding.executePendingBindings()
         }
         companion object{
@@ -43,14 +47,10 @@ class HomeFragmentHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeFragmentHo
         holder.bind(currentItem)
     }
 
-    fun setData(moviesData: List<Movie>?){
-//        val toDoDiffUtil = ToDoDiffUtil(dataList, toDoData)
-//        val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
-        if(moviesData == null){
-            this.movieList = listOf()
-            return
-        }
+    fun setData(moviesData: List<Movie>){
+        val movieDiffUtil = MovieDiffUtil(movieList, moviesData)
+        val movieDiffResult = DiffUtil.calculateDiff(movieDiffUtil)
         this.movieList = moviesData
-        //toDoDiffResult.dispatchUpdatesTo(this)
+        movieDiffResult.dispatchUpdatesTo(this)
     }
 }
