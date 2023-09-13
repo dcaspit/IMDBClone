@@ -6,19 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.imdbclone.models.MovieData
-import com.example.imdbclone.models.listOfMovies
 import com.example.imdbclone.network.MovieApiResponse
 import com.example.imdbclone.network.TMDBApi
-import com.example.imdbclone.network.TMDBApiService
-import com.example.imdbclone.utils.SingleLiveData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MoviesViewModel(application: Application): AndroidViewModel(application) {
 
@@ -27,18 +19,33 @@ class MoviesViewModel(application: Application): AndroidViewModel(application) {
     val moviesPreview : LiveData<MovieApiResponse>
         get() = _moviesPreview
 
+    private var _moviesTopRated =  MutableLiveData<MovieApiResponse>()
+    val moviesTopRated : LiveData<MovieApiResponse>
+        get() = _moviesTopRated
+
 
     fun fetchMoviesPreviews() {
         viewModelScope.launch {
             try {
                 withContext(Dispatchers.Default){
-                    delay(200)
                     if(_moviesPreview.value == null){
-                        val call = TMDBApi.tmdbApiService.getMovies()
+                        val call = TMDBApi.tmdbApiService.getMoviesPreviews()
                         _moviesPreview.postValue(call)
                     }
                 }
             }catch (e: Exception){
+                Log.d("ERROR", e.stackTraceToString())
+            }
+        }
+    }
+
+    fun fetchMoviesTopRated() {
+        viewModelScope.launch {
+            try{
+                if(_moviesTopRated.value != null) return@launch
+                val call = TMDBApi.tmdbApiService.getMoviesTopRated()
+                _moviesTopRated.postValue(call)
+            } catch (e: Exception){
                 Log.d("ERROR", e.stackTraceToString())
             }
         }

@@ -1,4 +1,4 @@
-package com.example.imdbclone.fragments.home.adapter
+package com.example.imdbclone.fragments.home.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,22 +7,21 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.loadAny
-import com.example.imdbclone.databinding.MovieCardBinding
+import com.example.imdbclone.databinding.MovieTopRatedCardBinding
 import com.example.imdbclone.fragments.main.MainFragmentDirections
 import com.example.imdbclone.network.Movie
 
-class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecyclerAdapter.MoviePreviewViewHolder>() {
+class HomeTopRatedRecyclerAdapter: RecyclerView.Adapter<HomeTopRatedRecyclerAdapter.HomeTopRatedViewHolder>() {
 
     var movieList = emptyList<Movie>()
 
-    class MoviePreviewViewHolder(
-        private val binding: MovieCardBinding
-    ):  RecyclerView.ViewHolder(binding.root){
+    class HomeTopRatedViewHolder(
+        val binding: MovieTopRatedCardBinding
+    ): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(movie: Movie){
+        fun bind(movie: Movie) {
             binding.movie = movie
-            binding.rowBackground.setOnClickListener {
+            binding.cardContainer.setOnClickListener {
                 val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
                 it.findNavController().navigate(action)
             }
@@ -30,19 +29,20 @@ class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecycler
             binding.movieImage.load(imgUri)
             binding.executePendingBindings()
         }
-        companion object{
-            fun from(parent: ViewGroup): MoviePreviewViewHolder {
-                val binding = MovieCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                return MoviePreviewViewHolder(binding)
+
+        companion object {
+            fun from(parent: ViewGroup): HomeTopRatedViewHolder{
+                val binding = MovieTopRatedCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                return HomeTopRatedViewHolder(binding)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MoviePreviewViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HomeTopRatedViewHolder.from(parent)
 
     override fun getItemCount(): Int = movieList.size
 
-    override fun onBindViewHolder(holder: MoviePreviewViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HomeTopRatedViewHolder, position: Int) {
         val currentItem = movieList[position]
         holder.bind(currentItem)
     }
@@ -53,4 +53,6 @@ class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecycler
         this.movieList = moviesData
         movieDiffResult.dispatchUpdatesTo(this)
     }
+
+
 }

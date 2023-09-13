@@ -1,4 +1,4 @@
-package com.example.imdbclone.fragments.home.adapter
+package com.example.imdbclone.fragments.home.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.imdbclone.network.Movie

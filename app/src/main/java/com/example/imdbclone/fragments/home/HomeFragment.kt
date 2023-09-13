@@ -9,7 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imdbclone.databinding.FragmentHomePageBinding
-import com.example.imdbclone.fragments.home.adapter.HomeHorizontalRecyclerAdapter
+import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
+import com.example.imdbclone.fragments.home.adapters.HomeTopRatedRecyclerAdapter
 import com.example.imdbclone.viewModels.MoviesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class HomeFragment(
     private var _binding: FragmentHomePageBinding? = null
 
     private val moviePreviewAdapter: HomeHorizontalRecyclerAdapter by lazy { HomeHorizontalRecyclerAdapter() }
+    private val movieTopRatedAdapter: HomeTopRatedRecyclerAdapter by lazy { HomeTopRatedRecyclerAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +35,7 @@ class HomeFragment(
             binding.lifecycleOwner = viewLifecycleOwner
             binding.moviesViewModel = moviesViewModel
 
-            setupRecyclerview()
+            setupRecyclerviews()
 
             return binding.root
         } catch (e: Exception){
@@ -47,14 +49,26 @@ class HomeFragment(
         lifecycleScope.launch(Dispatchers.IO) {
             moviesViewModel.fetchMoviesPreviews()
         }
+        lifecycleScope.launch(Dispatchers.IO) {
+            moviesViewModel.fetchMoviesTopRated()
+        }
     }
 
-    private fun setupRecyclerview() {
-        val recyclerView = binding.recyclerView
-        recyclerView.adapter = moviePreviewAdapter
-        val layoutManager = LinearLayoutManager(
+    private fun setupRecyclerviews() {
+        val horizontalRecyclerView = binding.horizonalRecyclerView
+        horizontalRecyclerView.adapter = moviePreviewAdapter
+        val horizonatalLayoutManager = LinearLayoutManager(
             binding.root.context,
             LinearLayoutManager.HORIZONTAL, false
+        )
+
+        horizontalRecyclerView.layoutManager = horizonatalLayoutManager
+
+        val recyclerView = binding.topRatedRecyclerView
+        recyclerView.adapter = movieTopRatedAdapter
+        val layoutManager = LinearLayoutManager(
+            binding.root.context,
+            LinearLayoutManager.VERTICAL, false
         )
 
         recyclerView.layoutManager = layoutManager
