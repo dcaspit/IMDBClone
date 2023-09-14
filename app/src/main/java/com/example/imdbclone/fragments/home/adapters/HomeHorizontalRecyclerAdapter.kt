@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.imdbclone.databinding.MovieCardBinding
+import com.example.imdbclone.databinding.MoviePreviewCardBinding
 import com.example.imdbclone.fragments.main.MainFragmentDirections
 import com.example.imdbclone.network.GlideLoader
 import com.example.imdbclone.network.Movie
@@ -15,7 +15,7 @@ class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecycler
     var movieList = emptyList<Movie>()
 
     class MoviePreviewViewHolder(
-        private val binding: MovieCardBinding
+        private val binding: MoviePreviewCardBinding
     ):  RecyclerView.ViewHolder(binding.root){
 
         val glideLoader = GlideLoader(binding.root.context)
@@ -33,7 +33,7 @@ class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecycler
         }
         companion object{
             fun from(parent: ViewGroup): MoviePreviewViewHolder {
-                val binding = MovieCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = MoviePreviewCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return MoviePreviewViewHolder(binding)
             }
         }

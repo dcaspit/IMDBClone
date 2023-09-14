@@ -23,6 +23,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
+        <Button
+            android:id="@+id/bt_add_fav"
+            android:layout_width="75dp"
+            android:layout_height="50dp"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:text="@string/save_favorite"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="-8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/iv_cover"
+            />
+
         <ImageView
             android:id="@+id/iv_poster"
             android:layout_width="120dp"
@@ -87,18 +100,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_poster"
-                app:layout_constraintBottom_toTopOf="@id/bt_add_fav"/>
-
-        <Button
-            android:id="@+id/bt_add_fav"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="Add To Favorite"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
-            />
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

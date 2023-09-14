@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.data.viewModels.DatabaseViewModel
-import com.example.imdbclone.databinding.FragmentMovieDetailsBinding
+import com.example.imdbclone.databinding.FragmentDetailsBinding
 import com.example.imdbclone.network.GlideLoader
 
 class MovieDetails : Fragment() {
@@ -19,7 +19,7 @@ class MovieDetails : Fragment() {
 
     private val args by navArgs<MovieDetailsArgs>()
 
-    private var _binding: FragmentMovieDetailsBinding? = null
+    private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,7 +27,7 @@ class MovieDetails : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         try {
-            _binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
+            _binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
             binding.args = args
 
             loadPageImages()

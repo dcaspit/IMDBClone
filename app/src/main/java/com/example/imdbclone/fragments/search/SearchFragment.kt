@@ -7,46 +7,46 @@ import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.imdbclone.databinding.FragmentSearchPageBinding
+import com.example.imdbclone.databinding.FragmentSearchBinding
 import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.data.viewModels.SearchViewModel
 
 class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
-
+    private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private var _binding: FragmentSearchPageBinding? = null
-
     private val moviePreviewAdapter: HomeHorizontalRecyclerAdapter by lazy { HomeHorizontalRecyclerAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSearchPageBinding.inflate(layoutInflater, container, false)
-        // Set up a listener for search query changes
-        binding.search.setOnQueryTextListener(object : OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query == null) return false
-                performSearch(query);
-                return true;
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return false
-            }
-
-        })
-
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.searchViewModel = searchViewModel
-
-        setupRecyclerviews()
-
+        _binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
+        with(binding){
+            lifecycleOwner = viewLifecycleOwner
+            searchViewModel = searchViewModel
+            search.setOnQueryTextListener(queryListener)
+            setupRecyclerviews()
+        }
         return binding.root
+    }
+
+    private val queryListener = object : OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            if (query == null) return false
+            performSearch(query);
+            return true;
+        }
+
+        override fun onQueryTextChange(p0: String?): Boolean {
+            return false
+        }
+    }
+
+    private fun performSearch(query: String) {
+        searchViewModel.fetchMoviesSearchResults(query)
     }
 
     private fun setupRecyclerviews() {
@@ -57,7 +57,4 @@ class SearchFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
     }
 
-    private fun performSearch(query: String) {
-        searchViewModel.fetchMoviesSearchResults(query)
-    }
 }

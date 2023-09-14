@@ -6,7 +6,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.imdbclone.databinding.MovieCardBinding
+import com.example.imdbclone.databinding.MoviePreviewCardBinding
 import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.fragments.home.adapters.MovieDiffUtil
 import com.example.imdbclone.fragments.main.MainFragmentDirections

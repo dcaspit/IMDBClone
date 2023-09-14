@@ -18,11 +18,7 @@ class DatabaseViewModel(application: Application) : AndroidViewModel(application
     private val movieDao = MoviesDatabase.getDataabase(application).movieDao()
     private val repository: MovieRepository = MovieRepository(movieDao)
 
-    private val getAllMovies: LiveData<List<MovieData>> = repository.getAllMovies
-
-    private val _favMovie = MutableLiveData<Boolean>()
-    val favMovie: LiveData<Boolean>
-        get() = _favMovie
+    val getAllMovies: LiveData<List<MovieData>> = repository.getAllMovies
 
     fun insertData(movieData: MovieData) {
         viewModelScope.launch(Dispatchers.IO) {

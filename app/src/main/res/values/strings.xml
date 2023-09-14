@@ -4,4 +4,6 @@
     <string name="title">Title</string>
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="movies_preview">Movies Preview</string>
+    <string name="save_favorite">Save</string>
+    <string name="favorite_page">Favorite Page</string>
 </resources>

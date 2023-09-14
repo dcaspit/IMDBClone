@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.fragments.home.adapters.HomeTopRatedRecyclerAdapter
 import com.example.imdbclone.data.models.MovieData
+import com.example.imdbclone.network.Movie
 import com.example.imdbclone.network.MovieApiResponse
 
 class BindingAdapters {
@@ -58,6 +59,25 @@ class BindingAdapters {
 
                 val adapter = recyclerView.adapter as HomeTopRatedRecyclerAdapter
                 adapter.setData(movieApiResponse.results)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        @JvmStatic
+        @BindingAdapter("populateFavoritesRecycler")
+        fun populateFavoritesRecycler(
+            recyclerView: RecyclerView,
+            movieList: List<Movie>?
+        ) {
+            try {
+                if (movieList == null) return
+                if (recyclerView.adapter == null || recyclerView.adapter !is HomeTopRatedRecyclerAdapter) {
+                    recyclerView.adapter = HomeTopRatedRecyclerAdapter().apply { setData(listOf()) }
+                }
+
+                val adapter = recyclerView.adapter as HomeTopRatedRecyclerAdapter
+                adapter.setData(movieList)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
