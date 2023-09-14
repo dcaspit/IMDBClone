@@ -5,29 +5,31 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.databinding.MoviePreviewCardBinding
 import com.example.imdbclone.fragments.main.MainFragmentDirections
 import com.example.imdbclone.network.GlideLoader
-import com.example.imdbclone.network.Movie
+import com.example.imdbclone.network.POSTER_BASE_URL
+import com.example.imdbclone.utils.MovieDataDiffUtil
 
 class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecyclerAdapter.MoviePreviewViewHolder>() {
 
-    var movieList = emptyList<Movie>()
+    private var movieList = emptyList<MovieData>()
 
     class MoviePreviewViewHolder(
         private val binding: MoviePreviewCardBinding
     ):  RecyclerView.ViewHolder(binding.root){
 
-        val glideLoader = GlideLoader(binding.root.context)
+        private val glideLoader = GlideLoader(binding.root.context)
 
-        fun bind(movie: Movie){
-            binding.movie = movie
+        fun bind(movieData: MovieData){
+            binding.movieData = movieData
             binding.rowBackground.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
+                val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movieData)
                 it.findNavController().navigate(action)
             }
 
-            glideLoader.loadRoundedImageWithCaching("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path, binding.movieImage)
+            glideLoader.loadRoundedImageWithCaching(POSTER_BASE_URL + movieData.imgUrl, binding.movieImage)
 
             binding.executePendingBindings()
         }
@@ -48,9 +50,9 @@ class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecycler
         holder.bind(currentItem)
     }
 
-    fun setData(moviesData: List<Movie>){
-        val movieDiffUtil = MovieDiffUtil(movieList, moviesData)
-        val movieDiffResult = DiffUtil.calculateDiff(movieDiffUtil)
+    fun setData(moviesData: List<MovieData>){
+        val jsonMovieDiffUtil = MovieDataDiffUtil(movieList, moviesData)
+        val movieDiffResult = DiffUtil.calculateDiff(jsonMovieDiffUtil)
         this.movieList = moviesData
         movieDiffResult.dispatchUpdatesTo(this)
     }

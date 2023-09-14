@@ -5,8 +5,8 @@
     <data>
 
         <variable
-                name="Movie"
-                type="com.example.imdbclone.network.Movie" />
+                name="movieData"
+                type="com.example.imdbclone.data.models.MovieData" />
     </data>
 
 
@@ -41,7 +41,7 @@
                     android:id="@+id/movie_title"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
-                    android:text="@{Movie.title}"
+                    android:text="@{movieData.title}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/movie_image"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +52,7 @@
                     android:id="@+id/movie_description"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:text="@{Movie.overview}"
+                    android:text="@{movieData.description}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/movie_title"
                     app:layout_constraintTop_toBottomOf="@id/movie_title"

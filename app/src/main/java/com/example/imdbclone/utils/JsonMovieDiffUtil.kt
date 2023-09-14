@@ -1,11 +1,12 @@
-package com.example.imdbclone.fragments.home.adapters
+package com.example.imdbclone.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.imdbclone.network.Movie
+import com.example.imdbclone.data.models.JsonMovie
 
-class MovieDiffUtil(
-    private val oldList: List<Movie>,
-    private val newList: List<Movie>
+
+class JsonMovieDiffUtil(
+    private val oldList: List<JsonMovie>,
+    private val newList: List<JsonMovie>
 ): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 

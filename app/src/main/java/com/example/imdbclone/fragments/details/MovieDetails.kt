@@ -11,7 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.data.viewModels.DatabaseViewModel
 import com.example.imdbclone.databinding.FragmentDetailsBinding
+import com.example.imdbclone.network.COVER_BASE_URL
 import com.example.imdbclone.network.GlideLoader
+import com.example.imdbclone.network.POSTER_BASE_URL
 
 class MovieDetails : Fragment() {
 
@@ -44,11 +46,11 @@ class MovieDetails : Fragment() {
     private fun loadPageImages() {
         val glideLoader = GlideLoader(binding.root.context)
         glideLoader.loadImageWithCaching(
-            "https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + args.movie.poster_path,
+            COVER_BASE_URL + args.movieData.imgUrl,
             binding.ivCover
         )
         glideLoader.loadRoundedImageWithCaching(
-            "https://www.themoviedb.org/t/p/w220_and_h330_face" + args.movie.poster_path,
+            POSTER_BASE_URL + args.movieData.imgUrl,
             binding.ivPoster
         )
     }
@@ -58,23 +60,23 @@ class MovieDetails : Fragment() {
             insertMovieToDatabase()
         }
 
-        mDatabaseViewModel.getMovieByTitle(args.movie.id)
+        mDatabaseViewModel.getMovieByTitle(args.movieData.movieId)
             .observe(viewLifecycleOwner) { movieExsits ->
                 if (movieExsits == true) {
-                    binding.btAddFav.text = "Added Already"
+                    binding.btAddFav.text = "Remove"
                     binding.btAddFav.isEnabled = false
                 }
             }
     }
 
     private fun insertMovieToDatabase() {
-        val imgUrl = args.movie.poster_path
-        val mTitle = args.movie.title
-        val mDes = args.movie.overview
-        val movieId = args.movie.id
+        val imgUrl = args.movieData.imgUrl
+        val mTitle = args.movieData.title
+        val mDes = args.movieData.description
+        val movieId = args.movieData.movieId
 
         val movieData = MovieData(
-            movieId, mTitle, mDes, imgUrl ?: ""
+            movieId, mTitle, mDes, imgUrl ?: "", args.movieData.popularity, args.movieData.release_date
         )
 
         mDatabaseViewModel.insertData(movieData)

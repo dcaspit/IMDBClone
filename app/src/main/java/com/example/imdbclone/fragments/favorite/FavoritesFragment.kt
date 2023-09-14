@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imdbclone.R
 import com.example.imdbclone.data.viewModels.DatabaseViewModel
 import com.example.imdbclone.databinding.FragmentFavoritesBinding
@@ -28,10 +29,19 @@ class FavoritesFragment : Fragment() {
 
         // Observe LiveData
         mDatabaseViewModel.getAllMovies.observe(viewLifecycleOwner) { data ->
-            mSharedViewModel.checkIfDatabaseEmpty(data)
+
             movieTopRatedAdapter.setData(data)
             binding.rvFavorites.scheduleLayoutAnimation()
         }
+
+        val recyclerView = binding.rvFavorites
+        recyclerView.adapter = movieTopRatedAdapter
+        val layoutManager = LinearLayoutManager(
+            binding.root.context,
+            LinearLayoutManager.VERTICAL, false
+        )
+
+        recyclerView.layoutManager = layoutManager
 
         return binding.root
     }

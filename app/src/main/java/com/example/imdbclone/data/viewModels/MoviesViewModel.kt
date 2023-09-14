@@ -6,53 +6,65 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.imdbclone.network.MovieApiResponse
+import com.example.imdbclone.data.models.MovieApiResponse
+import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.network.TMDBApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MoviesViewModel(application: Application): AndroidViewModel(application) {
+class MoviesViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private var _moviesPreview = MutableLiveData<MovieApiResponse>()
-    val moviesPreview : LiveData<MovieApiResponse>
+    private var _moviesPreview = MutableLiveData<List<MovieData>>()
+    val moviesPreview: LiveData<List<MovieData>>
         get() = _moviesPreview
 
-    private var _moviesTopRated =  MutableLiveData<MovieApiResponse>()
-    val moviesTopRated : LiveData<MovieApiResponse>
+    private var _moviesTopRated = MutableLiveData<List<MovieData>>()
+    val moviesTopRated: LiveData<List<MovieData>>
         get() = _moviesTopRated
 
 
     fun fetchMoviesPreviews() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                withContext(Dispatchers.Default){
-                    if(_moviesPreview.value == null){
-                        val call = TMDBApi.tmdbApiService.getMoviesPreviews()
-                        _moviesPreview.postValue(call)
-                    }
-                }
-            }catch (e: Exception){
+                if (_moviesPreview.value != null) return@launch
+                val response = TMDBApi.tmdbApiService.getMoviesPreviews()
+                _moviesPreview.postValue(
+                    response.toMovieList()
+                )
+            } catch (e: Exception) {
                 Log.d("ERROR", e.stackTraceToString())
             }
         }
     }
 
     fun fetchMoviesTopRated() {
-        viewModelScope.launch {
-            try{
-                if(_moviesTopRated.value != null) return@launch
-                val call = TMDBApi.tmdbApiService.getMoviesTopRated()
-                _moviesTopRated.postValue(call)
-            } catch (e: Exception){
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (_moviesTopRated.value != null) return@launch
+                val response = TMDBApi.tmdbApiService.getMoviesTopRated()
+                _moviesTopRated.postValue(
+                    response.toMovieList()
+                )
+            } catch (e: Exception) {
                 Log.d("ERROR", e.stackTraceToString())
             }
         }
     }
 
-    fun resetObservables(){
-        _moviesPreview.value = MovieApiResponse(0, listOf(), 0, 0)
+    companion object {
+        fun MovieApiResponse.toMovieList() = this.results.map {
+            with((it)) {
+                MovieData(
+                    id, title, overview, poster_path ?: "", popularity.toString(), release_date
+                )
+            }
+        }
+    }
+
+    fun resetObservables() {
+        _moviesPreview.value = emptyList()
     }
 
 }

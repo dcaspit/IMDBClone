@@ -2,32 +2,33 @@ package com.example.imdbclone.fragments.home.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.example.imdbclone.data.models.JsonMovie
+import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.databinding.MovieTopRatedCardBinding
 import com.example.imdbclone.fragments.main.MainFragmentDirections
 import com.example.imdbclone.network.GlideLoader
-import com.example.imdbclone.network.Movie
+import com.example.imdbclone.network.POSTER_BASE_URL
+import com.example.imdbclone.utils.JsonMovieDiffUtil
+import com.example.imdbclone.utils.MovieDataDiffUtil
 
 class HomeTopRatedRecyclerAdapter: RecyclerView.Adapter<HomeTopRatedRecyclerAdapter.HomeTopRatedViewHolder>() {
 
-    var movieList = emptyList<Movie>()
+    private var movieList = emptyList<MovieData>()
 
     class HomeTopRatedViewHolder(
         val binding: MovieTopRatedCardBinding
     ): RecyclerView.ViewHolder(binding.root){
-        val glideLoader = GlideLoader(binding.root.context)
-        fun bind(movie: Movie) {
-            binding.movie = movie
+        private val glideLoader = GlideLoader(binding.root.context)
+        fun bind(movieData: MovieData) {
+            binding.movieData = movieData
             binding.cardContainer.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
+                val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movieData)
                 it.findNavController().navigate(action)
             }
-            glideLoader.loadRoundedImageWithCaching("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path, binding.movieImage)
-            binding.executePendingBindings()
+            glideLoader.loadRoundedImageWithCaching(POSTER_BASE_URL + movieData.imgUrl, binding.movieImage)
         }
 
         companion object {
@@ -47,9 +48,9 @@ class HomeTopRatedRecyclerAdapter: RecyclerView.Adapter<HomeTopRatedRecyclerAdap
         holder.bind(currentItem)
     }
 
-    fun setData(moviesData: List<Movie>){
-        val movieDiffUtil = MovieDiffUtil(movieList, moviesData)
-        val movieDiffResult = DiffUtil.calculateDiff(movieDiffUtil)
+    fun setData(moviesData: List<MovieData>){
+        val jsonMovieDiffUtil = MovieDataDiffUtil(movieList, moviesData)
+        val movieDiffResult = DiffUtil.calculateDiff(jsonMovieDiffUtil)
         this.movieList = moviesData
         movieDiffResult.dispatchUpdatesTo(this)
     }

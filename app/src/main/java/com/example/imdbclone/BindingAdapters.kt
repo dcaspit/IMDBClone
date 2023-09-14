@@ -4,11 +4,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.imdbclone.data.models.MovieApiResponse
 import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.fragments.home.adapters.HomeTopRatedRecyclerAdapter
 import com.example.imdbclone.data.models.MovieData
-import com.example.imdbclone.network.Movie
-import com.example.imdbclone.network.MovieApiResponse
 
 class BindingAdapters {
     companion object {
@@ -30,16 +29,16 @@ class BindingAdapters {
         @BindingAdapter("populateMoviesPreviewRecycler")
         fun populateMoviesPreviewRecycler(
             recyclerView: RecyclerView,
-            movieApiResponse: MovieApiResponse?
+            movieList: List<MovieData>?
         ) {
             try {
-                if (movieApiResponse == null) return
+                if (movieList == null) return
                 if (recyclerView.adapter == null || recyclerView.adapter !is HomeHorizontalRecyclerAdapter) {
                     recyclerView.adapter = HomeHorizontalRecyclerAdapter().apply { setData(listOf()) }
                 }
 
                 val adapter = recyclerView.adapter as HomeHorizontalRecyclerAdapter
-                adapter.setData(movieApiResponse.results)
+                adapter.setData(movieList)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -49,26 +48,7 @@ class BindingAdapters {
         @BindingAdapter("populateMoviesTopRatedRecycler")
         fun populateMoviesTopRatedRecycler(
             recyclerView: RecyclerView,
-            movieApiResponse: MovieApiResponse?
-        ) {
-            try {
-                if (movieApiResponse == null) return
-                if (recyclerView.adapter == null || recyclerView.adapter !is HomeTopRatedRecyclerAdapter) {
-                    recyclerView.adapter = HomeTopRatedRecyclerAdapter().apply { setData(listOf()) }
-                }
-
-                val adapter = recyclerView.adapter as HomeTopRatedRecyclerAdapter
-                adapter.setData(movieApiResponse.results)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("populateFavoritesRecycler")
-        fun populateFavoritesRecycler(
-            recyclerView: RecyclerView,
-            movieList: List<Movie>?
+            movieList: List<MovieData>?
         ) {
             try {
                 if (movieList == null) return
@@ -83,22 +63,41 @@ class BindingAdapters {
             }
         }
 
+        @JvmStatic
+        @BindingAdapter("populateFavoritesRecycler")
+        fun populateFavoritesRecycler(
+            recyclerView: RecyclerView,
+            movieData: List<MovieData>?
+        ) {
+            try {
+                if (movieData == null) return
+                if (recyclerView.adapter == null || recyclerView.adapter !is HomeTopRatedRecyclerAdapter) {
+                    recyclerView.adapter = HomeTopRatedRecyclerAdapter().apply { setData(listOf()) }
+                }
+
+                val adapter = recyclerView.adapter as HomeTopRatedRecyclerAdapter
+                adapter.setData(movieData)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
 
 
         @JvmStatic
         @BindingAdapter("populateMoviesSearchRecycler")
         fun populateMoviesSearchRecycler(
             recyclerView: RecyclerView,
-            movieApiResponse: MovieApiResponse?
+            movieData: List<MovieData>?
         ) {
             try {
-                if (movieApiResponse == null) return
+                if (movieData == null) return
                 if (recyclerView.adapter == null || recyclerView.adapter !is HomeHorizontalRecyclerAdapter) {
                     recyclerView.adapter = HomeHorizontalRecyclerAdapter().apply { setData(listOf()) }
                 }
 
                 val adapter = recyclerView.adapter as HomeHorizontalRecyclerAdapter
-                adapter.setData(movieApiResponse.results)
+                adapter.setData(movieData)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
