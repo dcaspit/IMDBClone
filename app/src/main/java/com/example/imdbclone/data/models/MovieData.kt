@@ -9,9 +9,9 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "movies_table")
 data class MovieData(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     @ColumnInfo(name = "movie_id") val movieId: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String,
-    @ColumnInfo(name = "img_url") val imgUrl: String
+    @ColumnInfo(name = "img_url") val imgUrl: String,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
 )

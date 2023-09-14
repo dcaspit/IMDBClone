@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.imdbclone.databinding.MovieTopRatedCardBinding
 import com.example.imdbclone.fragments.main.MainFragmentDirections
+import com.example.imdbclone.network.GlideLoader
 import com.example.imdbclone.network.Movie
 
 class HomeTopRatedRecyclerAdapter: RecyclerView.Adapter<HomeTopRatedRecyclerAdapter.HomeTopRatedViewHolder>() {
@@ -18,15 +19,14 @@ class HomeTopRatedRecyclerAdapter: RecyclerView.Adapter<HomeTopRatedRecyclerAdap
     class HomeTopRatedViewHolder(
         val binding: MovieTopRatedCardBinding
     ): RecyclerView.ViewHolder(binding.root){
-
+        val glideLoader = GlideLoader(binding.root.context)
         fun bind(movie: Movie) {
             binding.movie = movie
             binding.cardContainer.setOnClickListener {
                 val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
                 it.findNavController().navigate(action)
             }
-            val imgUri = ("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path).toUri().buildUpon().scheme("https").build()
-            binding.movieImage.load(imgUri)
+            glideLoader.loadRoundedImageWithCaching("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path, binding.movieImage)
             binding.executePendingBindings()
         }
 

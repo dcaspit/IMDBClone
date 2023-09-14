@@ -1,5 +1,6 @@
 package com.example.imdbclone
 
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -81,6 +82,13 @@ class BindingAdapters {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+
+        @JvmStatic
+        @BindingAdapter("android:numberText")
+        fun setNumberText(textView: TextView, number: Double?){
+            if(number == null) return
+            textView.text = number.toString()
         }
 
     }

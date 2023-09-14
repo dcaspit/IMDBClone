@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.room.ColumnInfo
-import coil.load
 import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.data.viewModels.DatabaseViewModel
 import com.example.imdbclone.databinding.FragmentMovieDetailsBinding
+import com.example.imdbclone.network.GlideLoader
 
 class MovieDetails : Fragment() {
 
@@ -26,30 +24,16 @@ class MovieDetails : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         try {
             _binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
             binding.args = args
+
+            loadPageImages()
+            handleFavoriteButton()
+
             binding.executePendingBindings()
-
-            val coverImgUri = ("https://image.tmdb.org/t/p/w1000_and_h450_multi_faces" + args.movie.poster_path).toUri().buildUpon().scheme("https").build()
-            binding.ivCover.load(coverImgUri)
-
-            val imgUri = ("https://www.themoviedb.org/t/p/w220_and_h330_face" + args.movie.poster_path).toUri().buildUpon().scheme("https").build()
-            binding.ivPoster.load(imgUri)
-
-            binding.btAddFav.setOnClickListener {
-                insertMovieToDatabase()
-            }
-
-            mDatabaseViewModel.getMovieByTitle(args.movie.id).observe(viewLifecycleOwner) {movieExsits ->
-                if(movieExsits == true) {
-                    binding.btAddFav.text = "Added Already"
-                    binding.btAddFav.isEnabled = false
-                }
-            }
-
             return binding.root
         } catch (e: Exception) {
             e.printStackTrace()
@@ -57,26 +41,44 @@ class MovieDetails : Fragment() {
         return null;
     }
 
+    private fun loadPageImages() {
+        val glideLoader = GlideLoader(binding.root.context)
+        glideLoader.loadImageWithCaching(
+            "https://www.themoviedb.org/t/p/w1000_and_h450_multi_faces" + args.movie.poster_path,
+            binding.ivCover
+        )
+        glideLoader.loadRoundedImageWithCaching(
+            "https://www.themoviedb.org/t/p/w220_and_h330_face" + args.movie.poster_path,
+            binding.ivPoster
+        )
+    }
+
+    private fun handleFavoriteButton() {
+        binding.btAddFav.setOnClickListener {
+            insertMovieToDatabase()
+        }
+
+        mDatabaseViewModel.getMovieByTitle(args.movie.id)
+            .observe(viewLifecycleOwner) { movieExsits ->
+                if (movieExsits == true) {
+                    binding.btAddFav.text = "Added Already"
+                    binding.btAddFav.isEnabled = false
+                }
+            }
+    }
+
     private fun insertMovieToDatabase() {
+        val imgUrl = args.movie.poster_path
         val mTitle = args.movie.title
         val mDes = args.movie.overview
-        val imgUrl = args.movie.poster_path
         val movieId = args.movie.id
 
-        val movieData = imgUrl?.let {
-            MovieData(
-                null,
-                movieId,
-                mTitle,
-                mDes,
-                it
-            )
-        }
-        if (movieData != null) {
-            mDatabaseViewModel.insertData(movieData)
-            Toast.makeText(requireContext(), "Added!", Toast.LENGTH_LONG).show()
-            binding.btAddFav.text = "Already Added to Fav"
-        }
+        val movieData = MovieData(
+            movieId, mTitle, mDes, imgUrl ?: ""
+        )
+
+        mDatabaseViewModel.insertData(movieData)
+        Toast.makeText(requireContext(), "Added!", Toast.LENGTH_LONG).show()
     }
 
 

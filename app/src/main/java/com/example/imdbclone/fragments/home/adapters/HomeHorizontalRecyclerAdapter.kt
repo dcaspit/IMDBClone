@@ -26,10 +26,8 @@ class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecycler
                 val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
                 it.findNavController().navigate(action)
             }
-//            val imgUri = ().toUri().buildUpon().scheme("https").build()
-//            binding.movieImage.load(imgUri)
 
-            glideLoader.loadImageWithCaching("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path, binding.movieImage)
+            glideLoader.loadRoundedImageWithCaching("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path, binding.movieImage)
 
             binding.executePendingBindings()
         }
