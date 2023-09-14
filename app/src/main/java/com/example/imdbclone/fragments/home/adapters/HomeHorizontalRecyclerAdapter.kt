@@ -2,13 +2,12 @@ package com.example.imdbclone.fragments.home.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.imdbclone.databinding.MovieCardBinding
 import com.example.imdbclone.fragments.main.MainFragmentDirections
+import com.example.imdbclone.network.GlideLoader
 import com.example.imdbclone.network.Movie
 
 class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecyclerAdapter.MoviePreviewViewHolder>() {
@@ -19,14 +18,19 @@ class HomeHorizontalRecyclerAdapter: RecyclerView.Adapter<HomeHorizontalRecycler
         private val binding: MovieCardBinding
     ):  RecyclerView.ViewHolder(binding.root){
 
+        val glideLoader = GlideLoader(binding.root.context)
+
         fun bind(movie: Movie){
             binding.movie = movie
             binding.rowBackground.setOnClickListener {
                 val action = MainFragmentDirections.actionMainFragmentToMovieDetails(movie)
                 it.findNavController().navigate(action)
             }
-            val imgUri = ("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path).toUri().buildUpon().scheme("https").build()
-            binding.movieImage.load(imgUri)
+//            val imgUri = ().toUri().buildUpon().scheme("https").build()
+//            binding.movieImage.load(imgUri)
+
+            glideLoader.loadImageWithCaching("https://www.themoviedb.org/t/p/w220_and_h330_face" + movie.poster_path, binding.movieImage)
+
             binding.executePendingBindings()
         }
         companion object{
