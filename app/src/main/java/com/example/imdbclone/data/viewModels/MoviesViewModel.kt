@@ -1,4 +1,4 @@
-package com.example.imdbclone.viewModels
+package com.example.imdbclone.data.viewModels
 
 import android.app.Application
 import android.util.Log

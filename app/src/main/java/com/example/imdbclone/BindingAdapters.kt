@@ -5,7 +5,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.fragments.home.adapters.HomeTopRatedRecyclerAdapter
-import com.example.imdbclone.models.MovieData
+import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.network.MovieApiResponse
 
 class BindingAdapters {

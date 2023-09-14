@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.imdbclone.databinding.FragmentSearchPageBinding
 import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
-import com.example.imdbclone.viewModels.SearchViewModel
+import com.example.imdbclone.data.viewModels.SearchViewModel
 
 class SearchFragment : Fragment() {
 

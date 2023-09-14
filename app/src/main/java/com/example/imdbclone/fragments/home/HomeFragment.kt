@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imdbclone.databinding.FragmentHomePageBinding
 import com.example.imdbclone.fragments.home.adapters.HomeHorizontalRecyclerAdapter
 import com.example.imdbclone.fragments.home.adapters.HomeTopRatedRecyclerAdapter
-import com.example.imdbclone.viewModels.MoviesViewModel
+import com.example.imdbclone.data.viewModels.MoviesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

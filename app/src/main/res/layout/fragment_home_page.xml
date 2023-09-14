@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="moviesViewModel"
-                type="com.example.imdbclone.viewModels.MoviesViewModel" />
+                type="com.example.imdbclone.data.viewModels.MoviesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
