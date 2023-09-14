@@ -7,11 +7,10 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 
-@Entity(tableName = "movies_table", primaryKeys = ["id"])
-@Parcelize
+@Entity(tableName = "movies_table")
 data class MovieData(
-    @ColumnInfo(name = "id", index = true) var id: String,
-    @ColumnInfo(name = "title") var title: String,
-    @ColumnInfo(name = "description") var description: String,
-    @ColumnInfo(name = "img_url") var imgUrl: String
-): Parcelable
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "description") val description: String,
+    @ColumnInfo(name = "img_url") val imgUrl: String
+)

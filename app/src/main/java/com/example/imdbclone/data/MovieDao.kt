@@ -15,7 +15,7 @@ interface MovieDao {
 
     // When a new item comes into our Database, that is the same
     // as an item that we already have, we will ignore it.
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertMovie(movieData: MovieData)
+    @Insert
+    fun insertMovie(movieData: MovieData)
 
 }

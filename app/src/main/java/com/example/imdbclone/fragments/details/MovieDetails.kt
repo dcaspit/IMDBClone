@@ -56,7 +56,7 @@ class MovieDetails : Fragment() {
 
         val movieData = imgUrl?.let {
             MovieData(
-                "0",
+                0,
                 mTitle,
                 mDes,
                 it
