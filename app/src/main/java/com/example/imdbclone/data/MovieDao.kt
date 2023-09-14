@@ -15,7 +15,10 @@ interface MovieDao {
 
     // When a new item comes into our Database, that is the same
     // as an item that we already have, we will ignore it.
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMovie(movieData: MovieData)
+
+    @Query("SELECT EXISTS(SELECT * FROM movies_table WHERE movie_id = :movieId)")
+    fun isMovieExists(movieId: Int): LiveData<Boolean>
 
 }

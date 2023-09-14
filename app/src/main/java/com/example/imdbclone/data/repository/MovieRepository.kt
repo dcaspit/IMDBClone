@@ -8,7 +8,9 @@ class MovieRepository(private val movieDao: MovieDao) {
 
     val getAllMovies: LiveData<List<MovieData>> = movieDao.getAllMovies()
 
-    suspend fun insertMovie(movieData: MovieData) {
+    fun insertMovie(movieData: MovieData) {
         movieDao.insertMovie(movieData)
     }
+
+    fun getMovieById(id: Int) = movieDao.isMovieExists(id)
 }

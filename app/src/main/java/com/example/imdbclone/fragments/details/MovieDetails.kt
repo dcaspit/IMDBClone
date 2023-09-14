@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.room.ColumnInfo
 import coil.load
 import com.example.imdbclone.data.models.MovieData
 import com.example.imdbclone.data.viewModels.DatabaseViewModel
@@ -30,6 +31,7 @@ class MovieDetails : Fragment() {
         try {
             _binding = FragmentMovieDetailsBinding.inflate(layoutInflater, container, false)
             binding.args = args
+            binding.executePendingBindings()
 
             val coverImgUri = ("https://image.tmdb.org/t/p/w1000_and_h450_multi_faces" + args.movie.poster_path).toUri().buildUpon().scheme("https").build()
             binding.ivCover.load(coverImgUri)
@@ -41,7 +43,13 @@ class MovieDetails : Fragment() {
                 insertMovieToDatabase()
             }
 
-            binding.executePendingBindings()
+            mDatabaseViewModel.getMovieByTitle(args.movie.id).observe(viewLifecycleOwner) {movieExsits ->
+                if(movieExsits == true) {
+                    binding.btAddFav.text = "Added Already"
+                    binding.btAddFav.isEnabled = false
+                }
+            }
+
             return binding.root
         } catch (e: Exception) {
             e.printStackTrace()
@@ -53,10 +61,12 @@ class MovieDetails : Fragment() {
         val mTitle = args.movie.title
         val mDes = args.movie.overview
         val imgUrl = args.movie.poster_path
+        val movieId = args.movie.id
 
         val movieData = imgUrl?.let {
             MovieData(
-                0,
+                null,
+                movieId,
                 mTitle,
                 mDes,
                 it
