@@ -24,9 +24,9 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.searchViewModel = searchViewModel
         with(binding){
-            lifecycleOwner = viewLifecycleOwner
-            searchViewModel = searchViewModel
             search.setOnQueryTextListener(queryListener)
             setupRecyclerviews()
         }
