@@ -8,20 +8,9 @@
 # :notebook_with_decorative_cover: Table of Contents
 
 - [About the Project](#star2-about-the-project)
-<p>**1. Project Structure and Architecture:**
+<p> <B>1. Project Structure and Architecture:</B>
 
-You can structure your project using the MVVM (Model-View-ViewModel) architecture with Clean Architecture principles to separate concerns. This will help maintain a clean and scalable codebase. Here's an example of the project structure:
-
-- **`app`**: Contains the main Android application code.
-    - **`ui`**: Contains UI-related code.
-        - **`home`**: Contains the home page related UI components.
-        - **`search`**: Contains the search page related UI components.
-        - **`favorites`**: Contains the favorites page related UI components.
-    - **`viewmodels`**: Contains ViewModel classes for each UI component.
-    - **`model`**: Contains data models and repositories.
-    - **`data`**: Contains data sources and network-related code.
-- **`utils`**: Contains utility classes and functions.
-- **`storage`**: Contains code related to local storage (e.g., Room database).
+I structured the project using the MVVM (Model-View-ViewModel) architecture with Clean Architecture principles to separate concerns. This will help maintain a clean and scalable codebase.
 
 **2. Networking and API Calls:**
 
