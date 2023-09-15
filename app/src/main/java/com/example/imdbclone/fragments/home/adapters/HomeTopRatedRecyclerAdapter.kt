@@ -2,6 +2,7 @@ package com.example.imdbclone.fragments.home.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +20,7 @@ class HomeTopRatedRecyclerAdapter: RecyclerView.Adapter<HomeTopRatedRecyclerAdap
     private var movieList = emptyList<MovieData>()
 
     class HomeTopRatedViewHolder(
-        val binding: MovieTopRatedCardBinding
+        val binding: MovieTopRatedCardBinding,
     ): RecyclerView.ViewHolder(binding.root){
         private val glideLoader = GlideLoader(binding.root.context)
         fun bind(movieData: MovieData) {
@@ -39,7 +40,9 @@ class HomeTopRatedRecyclerAdapter: RecyclerView.Adapter<HomeTopRatedRecyclerAdap
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HomeTopRatedViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTopRatedViewHolder {
+        return HomeTopRatedViewHolder.from(parent)
+    }
 
     override fun getItemCount(): Int = movieList.size
 

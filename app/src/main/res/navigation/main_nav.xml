@@ -39,5 +39,12 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.imdbclone.fragments.favorite.FavoritesFragment"
         android:label="fragment_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_favoritesFragment_to_movieDetails"
+            app:destination="@id/movieDetails" />
+    </fragment>
 </navigation>

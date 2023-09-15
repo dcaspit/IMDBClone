@@ -11,6 +11,7 @@ import com.example.imdbclone.R
 import com.example.imdbclone.data.viewModels.DatabaseViewModel
 import com.example.imdbclone.databinding.FragmentFavoritesBinding
 import com.example.imdbclone.fragments.home.adapters.HomeTopRatedRecyclerAdapter
+import com.example.imdbclone.fragments.main.MainFragmentDirections
 
 class FavoritesFragment : Fragment() {
 
@@ -19,7 +20,7 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private val movieTopRatedAdapter: HomeTopRatedRecyclerAdapter by lazy { HomeTopRatedRecyclerAdapter() }
+    private val movieTopRatedAdapter: FavoriteRecyclerAdapter by lazy { FavoriteRecyclerAdapter() }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +30,6 @@ class FavoritesFragment : Fragment() {
 
         // Observe LiveData
         mDatabaseViewModel.getAllMovies.observe(viewLifecycleOwner) { data ->
-
             movieTopRatedAdapter.setData(data)
             binding.rvFavorites.scheduleLayoutAnimation()
         }
