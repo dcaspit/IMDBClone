@@ -29,7 +29,6 @@ For the main navigation using tabs, i used the Android Navigation Component. Def
 - Used a RecyclerView with appropriate adapters for displaying lists of movies.
 - For the horizontal scrollable movies preview, i used a RecyclerView with a horizontal LinearLayoutManager.
 - Used fragments for the different sections of the home page, search, and favorites.
-- Implemented a custom GridLayoutManager for the search results to control the grid layout's appearance.
 - For the movie details page, i created a separate fragment.
 
 **7. Local Storage:**
@@ -38,9 +37,7 @@ For saving favorite movies locally, I used Room Database. Created an entity and 
 
 **8. Version Control:**
 
-Used Git for version control and used GitHub for collaborative development.
-
-Remember to follow best practices, handle errors gracefully, and pay attention to user experience and design principles to make your app user-friendly. </p>
+Used Git for version control and used GitHub for collaborative development. </p>
 
 ## :star2: About the Project
 ### :space_invader: Tech Stack
